@@ -1,0 +1,13 @@
+./script/Base.s.sol
+./script/Deploy.s.sol
+./src/interface/IBAMM.sol
+./src/interface/IBAMMFactory.sol
+./test/AITokenTest.sol
+./test/AgentFactoryTest.sol
+./test/AgentRouterTest.sol
+./test/AgentTest.sol
+./test/BootstrapPoolTest.sol
+./test/Helpers/SigUtils.sol
+./test/MoveLiquidityTest.sol
+./test/ProxyTest.sol
+./test/TokenGovernorTest.sol

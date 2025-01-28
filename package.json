@@ -1,0 +1,47 @@
+{
+  "name": "@EveripediaNetwork/iq-agents-contracts",
+  "description": "IQ ATP",
+  "version": "1.0.0",
+  "author": {
+    "name": "EveripediaNetwork",
+    "url": "https://github.com/EveripediaNetwork"
+  },
+  "dependencies": {
+    "@ethersproject/providers": "^5.7.2",
+    "@openzeppelin/contracts": "^5.2.0",
+    "@uniswap/v2-core": "1.0.1",
+    "axios": "^1.7.9",
+    "dev-fraxswap": "github:FraxFinance/dev-fraxswap",
+    "ethers-utils": "^2.1.11"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.4",
+    "dotenv": "^16.4.7",
+    "ethers": "^6.13.4",
+    "forge-std": "github:foundry-rs/forge-std#v1.8.1",
+    "prettier": "^3.0.0",
+    "solhint": "^3.6.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  },
+  "keywords": [
+    "blockchain",
+    "ethereum",
+    "forge",
+    "foundry",
+    "smart-contracts",
+    "solidity"
+  ],
+  "private": true,
+  "scripts": {
+    "clean": "rm -rf cache out",
+    "build": "forge build",
+    "lint": "npm run lint:sol && npm run prettier:check",
+    "lint:sol": "forge fmt --check && npx solhint \"{script,src,test}/**/*.sol\"",
+    "prettier:check": "prettier --check \"**/*.{json,md,yml}\" --ignore-path \".prettierignore\"",
+    "prettier:write": "prettier --write \"**/*.{json,md,yml}\" --ignore-path \".prettierignore\"",
+    "test": "forge test",
+    "test:coverage": "forge coverage",
+    "test:coverage:report": "forge coverage --report lcov && genhtml lcov.info --branch-coverage --output-dir coverage"
+  }
+}

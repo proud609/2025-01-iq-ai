@@ -1,0 +1,11 @@
+@chainlink/=node_modules/@chainlink/
+@eth-optimism/=node_modules/@eth-optimism/
+@openzeppelin/=node_modules/@openzeppelin/
+@prb/test/=node_modules/dev-fraxswap/node_modules/@prb/test/
+@uniswap/=node_modules/@uniswap/
+dev-fraxswap/=node_modules/dev-fraxswap/
+ds-test/=node_modules/ds-test/
+forge-std/=node_modules/forge-std/
+frax-standard-solidity/=node_modules/frax-standard-solidity/
+frax-std/=node_modules/dev-fraxswap/node_modules/frax-standard-solidity/src/
+solidity-bytes-utils/=node_modules/solidity-bytes-utils/
