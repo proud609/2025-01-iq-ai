@@ -130,7 +130,7 @@ _Note for C4 wardens: Anything included in this `Automated Findings / Publicly K
 
 | Question                                | Answer                       |
 | --------------------------------------- | ---------------------------- |
-| ERC20 used by the protocol              |       IQ             |
+| ERC20 used by the protocol              |       vanilla ERC20s as collateral, IQ |
 | Test coverage                           |  93.09% |
 | ERC721 used  by the protocol            |            any              |
 | ERC777 used by the protocol             |           None                |
