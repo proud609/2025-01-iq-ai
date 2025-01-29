@@ -130,7 +130,7 @@ _Note for C4 wardens: Anything included in this `Automated Findings / Publicly K
 
 | Question                                | Answer                       |
 | --------------------------------------- | ---------------------------- |
-| ERC20 used by the protocol              |       Any (all possible ERC20s)             |
+| ERC20 used by the protocol              |       IQ             |
 | Test coverage                           |  93.09% |
 | ERC721 used  by the protocol            |            any              |
 | ERC777 used by the protocol             |           None                |
@@ -171,7 +171,11 @@ _Note for C4 wardens: Anything included in this `Automated Findings / Publicly K
 
 ### EIP compliance checklist
 
-N/A
+| Question                                | Answer                       |
+| --------------------------------------- | ---------------------------- |
+| src/AIToken.sol                         | ERC20                        |
+| src/Agent.sol                           | ERC721                       |
+
 
 # Additional context
 
