@@ -24,44 +24,68 @@ The 4naly3er report can be found [here](https://github.com/code-423n4/2025-01-iq
 
 _Note for C4 wardens: Anything included in this `Automated Findings / Publicly Known Issues` section is considered a publicly known issue and is ineligible for awards._
 
-Token will be IQ, so no need to review implementations with other tokens
-Whitelisted proxies can be malicious, not need to raise that
-Owner will be a multisig
-No need gas optimizations since its a cheap L2
-
-✅ SCOUTS: Please format the response above 👆 so its not a wall of text and its readable.
+- The token will be IQ, so there is no need to review implementations with other tokens.
+- Whitelisted proxies can be malicious - no need to raise this as an issue.
+- The owner will be a multisig.
+- Gas optimizations are not needed since this will be deployed on a cheap L2 chain.
 
 # Overview
 
-[ ⭐️ SPONSORS: add info here ]
+### [AIToken](https://github.com/code-423n4/2025-01-iq-ai/blob/main/src/AIToken.sol)
+
+- ERC20 Compliant Token which confers governeanve over `Agent` Contract.
+- Contains ERC20Permit Functionality.
+- Token contract is owned by the `Agent` Contract.
+- Token Clock based on timestamp rather than blockNumber
+
+### [Agent](https://github.com/code-423n4/2025-01-iq-ai/blob/main/src/Agent.sol)
+
+- `Agent` Contract which allows for call forwarding to whitelisted implementaion contracts.
+- Owner of the `Agent` is the `TokenGovernor` contract.
+- Whitelists much be approved via the `AgentFactory` contract.
+- Implementaions must adhere to the storage layout set forth in `Agent`
+- Similar to EIP-897 upgradality pattern
+
+### [AgentFactory](https://github.com/code-423n4/2025-01-iq-ai/blob/main/src/AgentFactory.sol)
+
+- Contract responsible for deploying the Agent Contract array
+- On `createAgent()` call the factory will deploy several contracts:
+  1. `Agent`
+  2. `AIToken`
+  3. `TokenGovernor`
+  4. `LiquidityManager` --`initializeBootstrapPool()`--> 4.1 `BootstrapPool`
+- AITokens in this step will be allocated between the `Agent`, `DAO` & `LiquidityManager` at this point.
+- Users will have an option to perform an initial buy through the `BootstrapPool` contract on the initial call.
+
+### [AgentRouter](https://github.com/code-423n4/2025-01-iq-ai/blob/main/src/AgentRouter.sol)
+
+- Contract used to route trades either buying or selling a given `AIToken`
+- Will swap either through the `BootstrapPool` or a `Fraxswap` pair
+
+### [BootstapPool](https://github.com/code-423n4/2025-01-iq-ai/blob/main/src/BootstrapPool.sol)
+
+- Serves as an initial pool through with an `AIToken` can be traded.
+- Owned by `LiquidityManager` contract.
+- Very similar to X\*Y=K style AMM.
+
+### [LiquidityManager](https://github.com/code-423n4/2025-01-iq-ai/blob/main/src/LiquidityManager.sol)
+
+- Contract intended to move liquidity between the bootstrap pool and the fraxswap pair give certain conditions are met.
+
+### [TokenGovernor](https://github.com/code-423n4/2025-01-iq-ai/blob/main/src/TokenGovernor.sol)
+
+- Governance contract based off of OZ `Governor.sol`
+- Voting token is `AIToken` Governor address will have ownership rights over the `Agent` contract.
+
 
 ## Links
 
-- **Previous audits:**  
-  - ✅ SCOUTS: If there are multiple report links, please format them in a list.
-- **Documentation:** https://github.com/IQAIcom/iq-agents-contracts/blob/main/README.md
+- **Previous audits:** N/A
+- **Documentation:** N/A
 - **Website:** https://iqai.com
 - **X/Twitter:** https://x.com/IQAICOM
 
 ---
-
-# Scope
-
-[ ✅ SCOUTS: add scoping and technical details here ]
-
-### Files in scope
-- ✅ This should be completed using the `metrics.md` file
-- ✅ Last row of the table should be Total: SLOC
-- ✅ SCOUTS: Have the sponsor review and and confirm in text the details in the section titled "Scoping Q amp; A"
-
-*For sponsors that don't use the scoping tool: list all files in scope in the table below (along with hyperlinks) -- and feel free to add notes to emphasize areas of focus.*
-
-| Contract | SLOC | Purpose | Libraries used |  
-| ----------- | ----------- | ----------- | ----------- |
-| [contracts/folder/sample.sol](https://github.com/code-423n4/repo-name/blob/contracts/folder/sample.sol) | 123 | This contract does XYZ | [`@openzeppelin/*`](https://openzeppelin.com/contracts/) |
-
-### Files out of scope
-✅ SCOUTS: List files/directories out of scope
 
 # Scope
 
@@ -104,42 +128,14 @@ No need gas optimizations since its a cheap L2
 
 ## Scoping Q &amp; A
 
-### General questions
-### Are there any ERC20's in scope?: Yes
-
-✅ SCOUTS: If the answer above 👆 is "Yes", please add the tokens below 👇 to the table. Otherwise, update the column with "None".
-
-Any (all possible ERC20s)
-
-
-### Are there any ERC777's in scope?: No
-
-✅ SCOUTS: If the answer above 👆 is "Yes", please add the tokens below 👇 to the table. Otherwise, update the column with "None".
-
-
-
-### Are there any ERC721's in scope?: Yes
-
-✅ SCOUTS: If the answer above 👆 is "Yes", please add the tokens below 👇 to the table. Otherwise, update the column with "None".
-
-any
-
-### Are there any ERC1155's in scope?: No
-
-✅ SCOUTS: If the answer above 👆 is "Yes", please add the tokens below 👇 to the table. Otherwise, update the column with "None".
-
-
-
-✅ SCOUTS: Once done populating the table below, please remove all the Q/A data above.
-
 | Question                                | Answer                       |
 | --------------------------------------- | ---------------------------- |
-| ERC20 used by the protocol              |       🖊️             |
-| Test coverage                           | ✅ SCOUTS: Please populate this after running the test coverage command                          |
-| ERC721 used  by the protocol            |            🖊️              |
-| ERC777 used by the protocol             |           🖊️                |
-| ERC1155 used by the protocol            |              🖊️            |
-| Chains the protocol will be deployed on | Otherfraxtal  |
+| ERC20 used by the protocol              |       Any (all possible ERC20s)             |
+| Test coverage                           |  93.09% |
+| ERC721 used  by the protocol            |            any              |
+| ERC777 used by the protocol             |           None                |
+| ERC1155 used by the protocol            |              None            |
+| Chains the protocol will be deployed on | Fraxtal  |
 
 ### ERC20 token behaviors in scope
 
@@ -174,73 +170,76 @@ any
 
 
 ### EIP compliance checklist
+
 N/A
-
-✅ SCOUTS: Please format the response above 👆 using the template below👇
-
-| Question                                | Answer                       |
-| --------------------------------------- | ---------------------------- |
-| src/Token.sol                           | ERC20, ERC721                |
-| src/NFT.sol                             | ERC721                       |
-
 
 # Additional context
 
 ## Main invariants
 
-https://github.com/IQAIcom/iq-agents-contracts/blob/main/README.md
+N/A
 
-✅ SCOUTS: Please format the response above 👆 so its not a wall of text and its readable.
+## Caveates
+
+1. CurrencyToken is intended to be an IERC20 compatible token. This excludes tokens with `feeOnTransfer()`
+   functionality, in addition to ERC777-like callback functionality.
+2. Implementaion contracts for `Agent` are intended to inherit the storage layout of the base `Agent` contract. Using a
+   pattern like so:
+
+```
+contract AdditionalFunctionalityForAgent is Agent {
+    uint256 public someAdditionalState;
+
+    constructor(
+        string memory name,
+        string memory symbol,
+        string memory url,
+        address _factory
+    )
+        Agent(name, symbol, url, _factory)
+    { }
+
+    function someAdditionalFunctionality() public { .... }
+  }
+```
+
+3. Similarly it can also be assumed that the `AgentFactory` Owner will not whitelist and proxy Implementations which are
+   malicious or interact with the base `Agent` state in a malicious manner.
+
 
 ## Attack ideas (where to focus for bugs)
- graduation of agents and transfer of LP to fraxswap
-general high severity of funds getting stuck/stolen
 
-✅ SCOUTS: Please format the response above 👆 so its not a wall of text and its readable.
+* Graduation of agents and transfer of LP to Fraxswap
+* High severity risks around funds getting stuck or stolen from the protocol
 
 ## All trusted roles in the protocol
 
-Owner of factory
-
-✅ SCOUTS: Please format the response above 👆 using the template below👇
-
 | Role                                | Description                       |
 | --------------------------------------- | ---------------------------- |
-| Owner                          | Has superpowers                |
-| Administrator                             | Can change fees                       |
+| AgentFactory Owner                      | admin rights                |
 
 ## Describe any novel or unique curve logic or mathematical models implemented in the contracts:
 
 N/A
 
-✅ SCOUTS: Please format the response above 👆 so its not a wall of text and its readable.
-
 ## Running tests
 
-https://github.com/IQAIcom/iq-agents-contracts/blob/main/README.md
-
-✅ SCOUTS: Please format the response above 👆 using the template below👇
-
 ```bash
-git clone https://github.com/code-423n4/2023-08-arbitrum
-git submodule update --init --recursive
-cd governance
-foundryup
-make install
-make build
-make sc-election-test
+git clone --recursive https://github.com/code-423n4/2025-01-iq-ai
+cd 2025-01-iq-ai
+pnpm i
+forge test
 ```
 To run code coverage
 ```bash
-make coverage
+forge coverage
 ```
 To run gas benchmarks
 ```bash
-make gas
+forge test --gas-report
 ```
 
-✅ SCOUTS: Add a screenshot of your terminal showing the gas report
-✅ SCOUTS: Add a screenshot of your terminal showing the test coverage
+![img](https://github.com/code-423n4/2025-01-iq-ai/blob/main/coverage.png?raw=true)
 
 ## Miscellaneous
 Employees of IQ AI and employees' family members are ineligible to participate in this audit.
