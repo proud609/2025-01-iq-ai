@@ -33,18 +33,18 @@ _Note for C4 wardens: Anything included in this `Automated Findings / Publicly K
 
 ### [AIToken](https://github.com/code-423n4/2025-01-iq-ai/blob/main/src/AIToken.sol)
 
-- ERC20 Compliant Token which confers governeanve over `Agent` Contract.
+- ERC20 Compliant Token which confers governance over `Agent` Contract.
 - Contains ERC20Permit Functionality.
 - Token contract is owned by the `Agent` Contract.
 - Token Clock based on timestamp rather than blockNumber
 
 ### [Agent](https://github.com/code-423n4/2025-01-iq-ai/blob/main/src/Agent.sol)
 
-- `Agent` Contract which allows for call forwarding to whitelisted implementaion contracts.
+- `Agent` Contract which allows for call forwarding to whitelisted implementation contracts.
 - Owner of the `Agent` is the `TokenGovernor` contract.
-- Whitelists much be approved via the `AgentFactory` contract.
-- Implementaions must adhere to the storage layout set forth in `Agent`
-- Similar to EIP-897 upgradality pattern
+- Whitelists must be approved via the `AgentFactory` contract.
+- Implementations must adhere to the storage layout set forth in `Agent`
+- Similar to EIP-897 upgradability pattern
 
 ### [AgentFactory](https://github.com/code-423n4/2025-01-iq-ai/blob/main/src/AgentFactory.sol)
 
@@ -70,7 +70,7 @@ _Note for C4 wardens: Anything included in this `Automated Findings / Publicly K
 
 ### [LiquidityManager](https://github.com/code-423n4/2025-01-iq-ai/blob/main/src/LiquidityManager.sol)
 
-- Contract intended to move liquidity between the bootstrap pool and the fraxswap pair give certain conditions are met.
+- Contract intended to move liquidity between the bootstrap pool and the fraxswap pair given certain conditions are met.
 
 ### [TokenGovernor](https://github.com/code-423n4/2025-01-iq-ai/blob/main/src/TokenGovernor.sol)
 
@@ -187,7 +187,7 @@ N/A
 
 1. CurrencyToken is intended to be an IERC20 compatible token. This excludes tokens with `feeOnTransfer()`
    functionality, in addition to ERC777-like callback functionality.
-2. Implementaion contracts for `Agent` are intended to inherit the storage layout of the base `Agent` contract. Using a
+2. Implementation contracts for `Agent` are intended to inherit the storage layout of the base `Agent` contract. Using a
    pattern like so:
 
 ```
