@@ -132,7 +132,7 @@ _Note for C4 wardens: Anything included in this `Automated Findings / Publicly K
 | --------------------------------------- | ---------------------------- |
 | ERC20 used by the protocol              |       vanilla ERC20s as collateral, IQ |
 | Test coverage                           |  93.09% |
-| ERC721 used  by the protocol            |            any              |
+| ERC721 used  by the protocol            |            None              |
 | ERC777 used by the protocol             |           None                |
 | ERC1155 used by the protocol            |              None            |
 | Chains the protocol will be deployed on | Fraxtal  |
