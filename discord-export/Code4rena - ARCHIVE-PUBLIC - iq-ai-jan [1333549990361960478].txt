@@ -1,0 +1,1317 @@
+==============================================================
+Guild: Code4rena
+Channel: ARCHIVE-PUBLIC / iq-ai-jan
+==============================================================
+
+[01/27/2025 21:43] itsmetechjay (pinned)
+👋 Hello and welcome to the $35,000 in USDC **IQ AI** audit channel!
+
+📆 Audit opens Wednesday, 29 January 2025 20:00 (20:00 UTC) and runs through Friday, 07 February 2025 20:00 (20:00 UTC) (9 days).
+
+Please give a warm welcome to the IQ AI team, particularly @Cesar Rodriguez, @Denett, and @tom2o17, who will be available for questions either here in the channel or via a PRIVATE thread in the ICT, CET, and EST timezones. 
+
+🤖 **Documentation bot assistance:** For general questions about the codebase, give our documentation bot a try, by tagging `@Docs Wolf` in any thread (private or public) and asking your question. The bot will make its best attempt to answer based on the codebase and documentation, and link you to relevant resources.  
+
+We'll be posting relevant links, documentation, etc. here, so if you intend to participate in this audit, consider enabling notifications for this channel. 🐺 ⏰
+
+Audit Page: https://code4rena.com/audits/2025-01-iq-ai
+
+{Reactions}
+brain (12) 
+
+[01/27/2025 21:43] itsmetechjay
+Pinned a message.
+
+
+[01/27/2025 21:43] itsmetechjay
+ℹ️ Please no questions or comments in this channel until the audit begins.
+
+{Reactions}
+🔥 (7) brain 
+
+[01/30/2025 11:25] xkeywordx
+Hello guys, on what chain will the protocol be deployed?
+
+
+[01/30/2025 11:28] xkeywordx
+@Denett  👆
+
+
+[01/30/2025 11:31] kesar
+its in the documentation
+
+
+[01/30/2025 11:33] xkeywordx
+I missed that part, found it now, thanks
+
+{Reactions}
+brain (2) 
+
+[01/30/2025 11:42] kyosi2963
+Is there is some source of the protocol documentation ?
+
+{Reactions}
+👍 
+
+[01/30/2025 12:28] kyosi2963
+What's the relation between AgentToken ,AIToken and currencyToken @Cesar Rodriguez @Denett  ?
+
+
+[01/30/2025 12:35] gass19_
+where i can find the documentation ?
+
+
+[01/30/2025 12:44] denett
+The agent token is an AIToken and that represents the ownership of the Agent. The currency token will be the IQ token and is used to buy/sell the agent token.
+
+{Reactions}
+👍 (2) 
+
+[01/30/2025 13:42] kyosi2963
+Agent Token = AI token, right ?
+
+{Reactions}
+👍 
+
+[01/30/2025 13:43] denett
+Yes
+
+{Reactions}
+❤️ 
+
+[01/30/2025 20:22] modey__
+co-ask
+
+
+[01/30/2025 20:41] tom2o17
+Would check the readme. 
+There is also inline documentation. 
+
+Feel free to reach out if you want anything clarified
+
+
+[01/31/2025 08:04] 0x_6a70
+Whats the idea behind the `phantomAmount`?
+
+
+[01/31/2025 08:10] kyosi2963
+It acts like a actificial liquidity so the pool does not start with 0 currency tokens, so users don’t get some unreasonable trading rate initially
+
+{Reactions}
+💯 (2) 
+
+[01/31/2025 09:14] z3nithpu1se
+Hey team, It would be nice of you, if you explain the Intended Flow of the buy() in agentRounter. Thanks
+
+
+[01/31/2025 09:49] ihtishamsudo
+As stated in readme, currency token would be an IERC20 compatible token except (FOT, Rebase) or only IQ Token?
+
+
+[01/31/2025 09:50] kyosi2963
+IQ token is the what we are going to buy using the currency token, currency token could be any standard ERC20 yeah
+
+
+[01/31/2025 10:06] denett
+The currency token is assumed to be a standard ERC20, we will launch using the IQ token. The other side of the pools are the Agent tokens, these are deployed in the factory and as you can see these are also vanilla ERC20 tokens. So we do not have to worry about FOT/rebasing stuff.
+
+
+[01/31/2025 10:10] denett
+It will first find the bootstrap pool for the agent token being traded. If this bootstrap pool has not yet been killed, the swap goes there. If it has been killed, all liquidity has moved over to Fraxswap and the swap is performed there.
+
+{Reactions}
+👍 (2) 😂 
+
+[01/31/2025 10:49] xkeywordx
+Hello @Denett , I tried opening a private thread and it is the first time I'm doing this. I hope that I did it correctly. Can you please check it out when you have time?
+
+{Reactions}
+👍 
+
+[01/31/2025 11:40] saurabh_0312
+votingDelay is the delay between two votes ??
+
+
+[01/31/2025 13:10] xkeywordx
+What `implementation` contracts do you plan on whitelisting for the `Agent`? 
+
+From the contest's page
+
+"Agent Contract which allows for call forwarding to whitelisted implementation contracts."
+
+These implementation contracts, what will they be? I am trying to understand with what type of contracts will the Agent interact with. Are they supposed to be bridges, DEXes, Oracles, or smth else?
+
+{Reactions}
+👍 
+
+[01/31/2025 13:42] xkeywordx
+Besides this, can you also please provide an example of a `defaultProxyImplementation` that you would add to the `AgentFactory` contract? I'd like to see what functions these implementations will have in order to understand what agents can do.
+
+{Reactions}
+👍 
+
+[01/31/2025 13:48] blnk_
+@xKeywordx from my limited understanding of their website and docs of the overall project I believe that the agents will only be allowed to perform simple tasks such as moving assets, staking etc but dont take my word for it because their docs scarcely ever mention the agents
+
+
+[01/31/2025 13:52] blnk_
+They have some mention of "specialized roles" but idk what that could be
+
+
+[01/31/2025 14:34] denett
+It is the time after which users can start voting after the vote has been created.
+
+{Reactions}
+👍 
+
+[01/31/2025 14:34] nour99
+```
+**
+     * @notice module:user-config
+     * @dev Delay, between the proposal is created and the vote starts. The unit this duration is expressed in depends
+     * on the clock (see ERC-6372) this contract uses.
+     *
+     * This can be increased to leave time for users to buy voting power, or delegate it, before the voting of a
+     * proposal starts.
+     *
+     * NOTE: While this interface returns a uint256, timepoints are stored as uint48 following the ERC-6372 clock type.
+     * Consequently this value must fit in a uint48 (when added to the current clock). See {IERC6372-clock}.
+     */
+    function votingDelay() external view returns (uint256);
+```
+
+{Reactions}
+👍 
+
+[01/31/2025 14:40] denett
+The DAO will only whitelist implementations that it deems safe. 
+The idea is that the agents will be able to interact with DeFi protocols of their choosing. They start out with a bunch of their own tokens, so they could swap them, or use them as collateral and borrow.
+
+
+[01/31/2025 14:44] denett
+We are still working on them.
+
+
+[01/31/2025 14:46] xkeywordx
+Okay, I'll write to you in the private thread something about this
+
+{Reactions}
+👍 
+
+[01/31/2025 16:04] kyosi2963
+Is it possible for the a user to deploy the contracts separately and not follow the AgentFactory flow ?
+
+
+[01/31/2025 16:40] nour99
+how you will make that? you need to call `createAgent()` function to "create Agent" and that will result in deploy all the contracts
+
+
+[01/31/2025 19:27] kyosi2963
+@Denett @tom2o17 are u guys available during the weekend ?
+
+
+[01/31/2025 19:38] denett
+Sure
+
+{Reactions}
+❤️ 👍 
+
+[02/01/2025 13:40] atharv181
+I am not able to compile the project can anyone help?
+
+It says "node_modules/dev-fraxswap/lib/v2-core/contracts/interfaces/IUniswapV2Pair.sol" not found: File not found
+
+
+[02/01/2025 13:42] kyosi2963
+Did u follow the setup steps - `pnpm install` ?
+
+{Reactions}
+💯 
+
+[02/01/2025 14:05] atharv181
+I was doing npm install 
+my bad😅 
+Thank you now working
+
+{Reactions}
+❤️ (2) 
+
+[02/01/2025 15:15] zkillua.dev
+Can `currencyToken` be USDC?
+
+
+[02/01/2025 15:18] kyosi2963
+only frax tokens i think
+
+
+[02/01/2025 15:53] uaarrr
+Its not the IQ ?
+
+
+[02/01/2025 15:53] kyosi2963
+Yeah, this one as well
+
+
+[02/01/2025 15:53] kyosi2963
+and fraxtal network related ones
+
+
+[02/01/2025 16:05] 0xgondarxyz
+hi everyone, on running forge build (after running npm i), I get this eror. anyone knows how to fix it ?
+Source "node_modules/dev-fraxswap/lib/v2-core/contracts/interfaces/IUniswapV2Pair.sol" not found: File not found.
+
+
+[02/01/2025 16:19] kyosi2963
+.
+
+
+[02/01/2025 16:49] michael_ai_crypto_python
+I have this file in "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol"
+
+Maybe you have to check the right paths in remappings.txt. Replace "node_modules" with "lib"
+
+
+[02/01/2025 17:07] 0xgondarxyz
+coudlN't fix it but thanks for your reply
+
+
+[02/01/2025 17:09] robin_bl4z3
+This works @0xGondar
+
+
+[02/01/2025 17:13] 0xgondarxyz
+Yes, thanks. I just checked the docs too and realized I did run npm i instead of pnpm i. Now it works fine . Cheers
+
+{Reactions}
+👍 
+
+[02/01/2025 19:06] 0xblack_bird
+Started a thread.
+
+
+[02/01/2025 20:45] 0xbnke
+H
+
+
+[02/01/2025 23:43] walodja1987
+Do I understand it correctly that currencyToken can have non-18 decimals, e.g. 6?
+
+
+[02/01/2025 23:59] walodja1987
+Can someone from the team clarify what BAMM is?
+
+
+[02/02/2025 00:55] kyosi2963
+The tokens behaviour is described in the contest page, what out-of and in-scope
+
+
+[02/02/2025 06:06] mrfalsegenius
+https://docs.frax.com/protocol/subprotocols/bamm/overview
+
+{Embed}
+https://docs.frax.com/protocol/subprotocols/bamm/overview
+BAMM Overview | Fraxtal Docs
+Fraxtal Docs
+
+{Reactions}
+🙏 
+
+[02/02/2025 11:24] hamid3780
+diva, what are you doing here 😆
+
+
+[02/02/2025 11:25] hamid3780
+just kidding haha
+
+
+[02/02/2025 11:48] walodja1987
+Collecting funds for my next audit 😄
+
+{Reactions}
+🔥 (7) 🤣 (11) 
+
+[02/02/2025 12:42] walodja1987
+What's the intended usage of stage? When would it be updated by the owner? It's set to 1 during agent creation. What would stage = 5 represent?
+
+
+[02/02/2025 12:57] zkillua.dev
+what's the answer for this?
+
+
+[02/02/2025 12:59] dot_cloud
+new meta: sponsor joining others contest for their own next contest
+
+{Reactions}
+🔥 (3) 
+
+[02/02/2025 13:24] kyosi2963
+Is it planned the project to be deployed on any other chain different from Fraxtal ? @Denett
+
+
+[02/02/2025 13:25] denett
+We will launch on Fraxtal, but you never know what the future might bring.
+
+{Reactions}
+❤️ 👍🏻 
+
+[02/02/2025 13:29] denett
+We will launch with IQ that has 18 decimals. No plans yet for other currency tokens, but you never know.
+
+
+[02/02/2025 13:30] denett
+The higher the stage the more capabilities the Agent has. Specifics of this are still being designed.
+
+{Reactions}
+👍 (2) 
+
+[02/02/2025 13:40] hamid3780
+How cool. 😅
+
+
+[02/02/2025 14:44] 0xgondarxyz
+what is target CCY liquidity?
+
+
+[02/02/2025 14:46] kyosi2963
+the target liquidity of currency tokens that should be reached before moving to fraxswap
+
+{Reactions}
+✅ (3) 
+
+[02/02/2025 14:49] 0xgondarxyz
+thanks
+
+
+[02/03/2025 04:23] evokid
+When you have time @Denett check my PT thank you 🙏
+
+{Reactions}
+👍 
+
+[02/03/2025 07:00] t0x1c.c0de
+Does Fraxtal have a private mempool?
+
+
+[02/03/2025 08:28] secret__one_46426
+I'm new to this platform, can anyone confirm whether Code4Rena rewards duplicate submissions or not?
+
+
+[02/03/2025 08:33] alekso1
+Read documentation my friend
+
+
+[02/03/2025 08:59] kyosi2963
+Maybe yes, most of L2s have a private one
+
+
+[02/03/2025 09:19] walodja1987
+@Denett I sent you a question in a private thread. Would appreciate your clarification on my question.
+
+{Reactions}
+👍 
+
+[02/03/2025 19:53] tom2o17
+it is private.
+
+{Reactions}
+👍 
+
+[02/04/2025 00:20] walodja1987
+Source?
+
+
+[02/04/2025 08:48] davies_0212
+Should I assume that non-18 decimal currency tokens are Out Of Scope for this audit?
+
+
+[02/04/2025 08:48] davies_0212
+cc @Jay | C4
+
+
+[02/04/2025 08:50] kyosi2963
+In the contest page it is said tokens with decimals > 18 and < 6 are out-of-scope
+
+{Reactions}
+🙏 
+
+[02/04/2025 08:50] kyosi2963
+So i guess tokens between 6 and 18 decimals are supported, but do not 100% take my word
+
+
+[02/04/2025 08:54] davies_0212
+I just want to clarify 6~8 decimal currency tokens.
+
+
+[02/04/2025 09:28] 0xaudron
+in fraxtal is there even tokens having  >18, <6 decimals?
+
+
+[02/04/2025 09:29] 0xaudron
+didn’t find much tokens in here tbh, i guess there’s just ~25 tokens deployed on fraxtal chain.
+
+{Reactions}
+😂 
+
+[02/04/2025 09:35] kyosi2963
+Maybe no ,that's why they are out of scope 😄
+
+
+[02/04/2025 10:06] ccvascocc
+What are the erc721 tokens in this protocol for?
+
+
+[02/04/2025 10:15] kyosi2963
+Agent contract is an ERC721 , it's only used for a representation of the owner of the agent
+
+{Reactions}
+👍 
+
+[02/04/2025 10:38] walodja1987
+Why shouldn’t there be tokens with <> 18 decimals on Fraxtal? According to my understanding tokens are not natively part of the Fraxtal chain and are deployed as smart contracts where the dev can set any decimals they want. Correct me if I’m wrong here.
+
+
+[02/04/2025 10:39] walodja1987
+My interpretation is that 6-18 decimals tokens are in scope.
+
+
+[02/04/2025 10:40] kyosi2963
+Same
+
+
+[02/04/2025 10:47] welith
+Well they kinda explicitly say:
+
+> The token will be IQ, so there is no need to review implementations with other tokens.
+
+
+[02/04/2025 10:49] kyosi2963
+How could we know the implementation of the IQ token
+
+
+[02/04/2025 10:50] kyosi2963
+Also they've mentioned that there might be other tokens that could be used in the future
+
+{Reactions}
+💯 
+
+[02/04/2025 10:50] welith
+https://etherscan.io/address/0x579cea1889991f68acc35ff5c3dd0621ff29b0c9#readContract
+
+{Embed}
+https://etherscan.io/address/0x579cea1889991f68acc35ff5c3dd0621ff29b0c9
+Everipedia: IQ Token
+(0x579cea1889991f68acc35ff5c3dd0621ff29b0c9) |...
+The Contract Address 0x579cea1889991f68acc35ff5c3dd0621ff29b0c9 page allows users to view the source code, transactions, balances, and analytics for the contract address. Users can also interact and make transactions to the contract directly on Etherscan.
+Code4rena - ARCHIVE-PUBLIC - iq-ai-jan [1333549990361960478].txt_Files/og-F493A.jpg
+
+
+[02/04/2025 10:50] kyosi2963
+Thanks
+
+
+[02/04/2025 10:51] 0xaudron
+No, I mean not that any standard which are deployed till now - https://fraxscan.com/tokens
+
+{Embed}
+https://fraxscan.com/tokens
+Token Tracker | Fraxscan
+The list of ERC-20 Tokens and their Prices, Market Capitalizations and the Number of Holders in the Fraxtal Mainnet Network Blockchain on Fraxscan.
+Code4rena - ARCHIVE-PUBLIC - iq-ai-jan [1333549990361960478].txt_Files/og-DD052.jpg
+
+
+[02/04/2025 10:51] welith
+I would go with what is stated in the contest readme, as it is the ultimate truth, just because they mentioned something in Discord, won't make it valid when judging
+
+{Reactions}
+👍 (3) 
+
+[02/04/2025 10:57] 0xaudron
+and if you can’t showcase practical attack vectors with the current environment and implementations, i don’t think it’ll be more than Low/Info imo.
+
+I might be wrong tho!
+
+{Reactions}
+👍 
+
+[02/04/2025 11:02] kyosi2963
+But it is stated as well ```CurrencyToken is intended to be an IERC20 compatible token. This excludes tokens with feeOnTransfer()
+functionality, in addition to ERC777-like callback functionality.```
+
+
+[02/04/2025 11:02] welith
+Yes, but the one I showed is part of the publicly know issues
+
+
+[02/04/2025 11:42] no.one7777
+does `onlyOwner` is trusted or just `AgentFactory Owner` @Denett @Cesar Rodriguez @tom2o17
+
+
+[02/04/2025 12:01] kyosi2963
+Yes , it's trusted
+
+{Reactions}
+👍 
+
+[02/04/2025 19:45] golomp3761
+Hey everyone, what is the purpose of using agents, and why are URLs attached to them? Does anyone have the docs for this web3 app?
+
+
+[02/05/2025 04:31] outsideframe.
+couldn't find any docs beside the github for me
+
+
+[02/05/2025 06:05] secret__one_46426
+Have you found any source?? @Denett can you confirm this one??
+
+
+[02/05/2025 07:38] denett
+Agents are autonomous AI Agents that can do more that just talk. They can also engage in DeFi on-chain.
+
+
+[02/05/2025 08:25] golomp3761
+@Denett thanks for this information. One more question, what is the purpose of the URL parameter in the constructor? What are the project assumptions regarding this parameter, and what is its intended use? Is url is used to store some link to image?
+
+
+[02/05/2025 08:54] denett
+This URL will link to information about the Agent on IPFS.
+
+{Reactions}
+👍 
+
+[02/05/2025 10:10] kyosi2963
+The agent stage could be only 0 or 1 , right ? @Denett
+
+
+[02/05/2025 10:12] denett
+It can also go higher, but no functionalities have been tied to higher levels as of yet.
+
+{Reactions}
+👍 (2) 
+
+[02/05/2025 12:22] __serverless
+Please check PT.
+
+
+[02/05/2025 15:26] brandio
+whats going to be the proxy implementation of agent contract?
+
+
+[02/05/2025 16:43] denett
+Still being developed.
+
+{Reactions}
+👍 
+
+[02/05/2025 17:59] 0xaudron
+what’s exactly “stage” used for ? More context is appreciated.
+
+
+[02/05/2025 19:09] 0xrochimaru
+Does it mean the currency token will be IQ `The token will be IQ, so there is no need to review implementations with other tokens.` ?
+
+{Reactions}
+👍 (3) 👍🏻 
+
+[02/06/2025 09:58] anmol.eth
+It is used to decide the propsal threshold in governor. If token is in bootstrap phase then basically the proposal threshold is max uin256 meaning the voting is governance is disabled and only after the token is migrated to fraxswap the governance can be functional. As far as i know.
+
+{Reactions}
+👍 (2) ✅ 
+
+[02/06/2025 09:58] 0xaudron
+Thanks mate
+
+{Reactions}
+❤️ 
+
+[02/06/2025 12:19] saurabh_0312
+when i submit the tax info in the code4rena after the submit button it shows something went wrong.??What should i do
+
+
+[02/06/2025 12:20] kyosi2963
+They have shared that there is an issue on their side they are working on
+
+
+[02/06/2025 12:20] saurabh_0312
+ok ok
+
+
+[02/06/2025 12:54] elser17
+The intended function of TokenGovernor is that AIToken holders vote on proposals that will be executed if proposal succeeds? This proposals could execute onlyOwner functions from Agent contract as well as functions from proxyImplementation set in Agent?
+
+
+[02/06/2025 12:56] elser17
+Is the Agent contract expected to execute any transactions automatically at any time? Which would be the situation and how would this be achieved?
+
+
+[02/06/2025 14:11] aycozy
+just to be sure, does this contest ends today or tomorrow?
+
+
+[02/06/2025 14:12] mrfalsegenius
+8 Feb, 1 AM GMT+5
+
+
+[02/06/2025 14:16] welith
+Jan 29, 10:00 PM GMT+2
+Feb 7, 10:00 PM GMT+2
+
+
+[02/06/2025 14:16] welith
+so tomorrow
+
+
+[02/06/2025 14:18] aycozy
+thank you guys!!. daily warden needs to fix up
+
+{Reactions}
+👍 (2) 
+
+[02/06/2025 14:23] 0xhennywealth
+GM everyone. I just wanted ask if the ```TokenGovernor``` contract is the same as the one deployed in AgentFactory ```deployGovernor()``` if not where can i find the governor contract
+
+
+[02/06/2025 14:26] kyosi2963
+It should be the TokenGovernor, yeah
+
+
+[02/06/2025 14:28] 0xhennywealth
+Thanks a lot
+
+{Reactions}
+❤️ 
+
+[02/06/2025 15:16] dot_cloud
+yea I had to double check because of this
+
+
+[02/06/2025 18:41] 0xrochimaru
+Always double check the dates. I missed `Butter` because of it.
+
+
+[02/06/2025 18:56] elser17
+The intended function of TokenGovernor is that AIToken holders vote on proposals that will be executed if proposal succeeds? This proposals could execute onlyOwner functions from Agent contract as well as functions from proxyImplementation set in Agent?
+
+
+[02/06/2025 18:56] elser17
+Is the Agent contract expected to execute any transactions automatically at any time? Which would be the situation and how would this be achieved?
+
+
+[02/07/2025 10:32] zkillua.dev
+I created a new team for this contest. whom do i contact for approval?
+
+
+[02/07/2025 10:33] hulejman
+Anybody here made a transition from front end developer to smart contract auditor?
+
+{Reactions}
+👍 
+
+[02/07/2025 10:33] hulejman
+I have a few questions
+
+{Reactions}
+👀 
+
+[02/07/2025 10:56] __serverless
+You don't have to contact anyone, your team will be approved after sometime.
+
+
+[02/07/2025 18:01] evokid
+Just submitted all my findings. I hope you guys did well 🙏
+
+{Reactions}
+🙏 (8) 
+
+[02/07/2025 20:02] C4
+**🚨 AUDIT ALERT**
+
+@🐺Wardens The **IQ AI** audit is now closed! Huge thanks to everyone who participated 🔍, whether you submitted a finding or not.
+
+What's next: The sponsor team and judge will review the findings over the next couple of weeks.
+
+
+[02/07/2025 20:07] hamid3780
+Good contest, learnt alot too. 💆‍♂️
+Good luck guys! 💜👋
+
+{Reactions}
+🫡 
+
+[02/07/2025 20:12] 0xrochimaru
+806 submissions
+
+
+[02/07/2025 23:59] zkillua.dev
+is it also possible to read submissions?
+
+
+[02/08/2025 03:49] 0xrochimaru
+People with SR role can
+
+
+[02/08/2025 03:55] zkillua.dev
+are we allowed to discuss findings? 😅 I just want to know what i missed.
+
+
+[02/08/2025 04:42] welith
+no discussions in the public channel
+
+{Reactions}
+😂 
+
+[02/08/2025 07:16] evokid
+Be aware that's not allowed in C4 to discuss findings in public. This is serious for the both parties sponsors and C4 wardens community. As It would harm the process of both. Thank you -)
+
+
+[02/08/2025 07:22] zkillua.dev
+We cannot discuss findings, but  people with SR role can view submissions. I get it. Nice. Thank you👍
+
+
+[02/08/2025 07:24] evokid
+SR also can't discuss any findings in public as well. But they can view their submissions -)
+
+
+[02/08/2025 07:25] zkillua.dev
+Just their submissions or all submissions?
+
+
+[02/08/2025 07:27] evokid
+You can read about SR features in C4 website. Look at it and see what are the features. Good luck sir.
+
+
+[02/08/2025 07:29] zkillua.dev
+Thanks for the info 👍
+
+{Reactions}
+🫡 
+
+[02/08/2025 07:30] evokid
+Check out here https://discord.com/channels/810916927919620096/810929015509483554/1336997410118959137
+
+
+[02/17/2025 12:47] daniel526
+judging for this has been super fast
+
+{Reactions}
+🔥 (10) 
+
+[02/19/2025 22:58] walodja1987
+Can I already see preliminary results somewhere?
+
+
+[02/20/2025 02:17] secret__one_46426
+As I have submitted findings for this competation but there is no update for my findings in the finding page, where can i see if my submission is valid or not?? @Jay | C4 @Samus | C4 @kartoonjoy | C4🎇🎇 Please help
+
+
+[02/20/2025 03:46] 0xdemonnn
+need SR role to see prelim result cc:@Walodja1987 | DIVA Protocol@secret__one
+
+{Reactions}
+👍 
+
+[02/21/2025 12:02] l9baldur
+When can we expect results ?
+
+
+[02/21/2025 16:00] 0x15_eth
+Maybe next week
+
+
+[02/21/2025 16:36] dot_cloud
+https://tenor.com/view/oiia-oiiaoiia-oiia-oiia-cat-gif-13397875673260883779
+
+{Embed}
+https://tenor.com/view/oiia-oiiaoiia-oiia-oiia-cat-gif-13397875673260883779
+Code4rena - ARCHIVE-PUBLIC - iq-ai-jan [1333549990361960478].txt_Files/oiia-oiiaoiia-0CB54.png
+
+
+[02/21/2025 18:08] davies_0212
+@Jay | C4 After PJQA, nobody can comment?
+
+
+[02/21/2025 19:06] itsmetechjay
+It's possible the judge may re-open comments after the initial post-judging QA period, in which case, we'd adjust the status of the audit back to PJQA.
+
+{Reactions}
+👍 
+
+[02/22/2025 14:51] pkabhi
+how will someone know that their submission is valid or invalid after the judging phase ?
+
+
+[02/22/2025 15:56] 0xslowbug
+You don’t until report is out
+
+Unless you’re SR
+
+
+[02/22/2025 15:58] pkabhi
+so if I have submitted one I need to wait till report is out , that's right ?
+
+
+[02/22/2025 15:59] 0xslowbug
+Yeah
+
+
+[02/23/2025 13:26] davies_0212
+@Jay | C4 The phase `Reporting` indicates that all matters have been successfully resolved?
+
+
+[02/23/2025 13:26] davies_0212
+Does this mean that no one can discuss any issues with the judges?
+
+
+[02/24/2025 15:39] itsmetechjay
+The judge has re-opened the commenting period for this audit for SR wardens for an additional 24 hours.
+
+{Reactions}
+🙏 
+
+[02/25/2025 08:25] xkeywordx
+does this mean that we are close to getting the results out?
+
+
+[02/25/2025 13:38] itsmetechjay
+Close yes!
+
+
+[02/26/2025 09:53] 0xlucky45
+Anyone here has SR role?? i have one thing to check . Please Dm!!
+
+
+[02/27/2025 08:08] danielwang_55601
+https://tenor.com/view/lion-king-simba-nala-please-hopeful-gif-3560685
+
+{Embed}
+https://tenor.com/view/lion-king-simba-nala-please-hopeful-gif-3560685
+simba and nala
+Code4rena - ARCHIVE-PUBLIC - iq-ai-jan [1333549990361960478].txt_Files/lion-king-simba-9FCAD.png
+
+
+[02/27/2025 12:21] bizzaro0x13
+https://tenor.com/view/wen-wen-moon-wen-lambo-wen-stake-wen-payout-gif-25817468
+
+{Embed}
+https://tenor.com/view/wen-wen-moon-wen-lambo-wen-stake-wen-payout-gif-25817468
+Code4rena - ARCHIVE-PUBLIC - iq-ai-jan [1333549990361960478].txt_Files/wen-wen-moon-1CAC3.png
+
+
+[02/27/2025 19:48] willycode20
+It's better to find a medium than an high in this contest 😅 
+
+Congrat everyone🔥
+
+
+[02/27/2025 19:50] dsbex
+When are we able to see the findings?
+
+
+[02/27/2025 19:56] 0xjuancito
+gg to everyone! 🏆
+
+
+[02/27/2025 19:59] alekso1
+I'm last 😢  can't wait to see the report, gg everyone!
+
+{Reactions}
+🫡 
+
+[02/27/2025 20:28] 0x23r0
+@KupiaSec can i dm?
+
+{Reactions}
+👍 
+
+[02/27/2025 20:30] vladi319
+Wow first ever pay out
+Thank you !
+
+{Reactions}
+🥳 (7) 
+
+[02/27/2025 20:32] codexbugmenot
+Congratulations to top 5  and everyone who participated 🎉🎉🥳🥳
+
+
+[02/27/2025 20:33] willycode20
+Congrat man
+
+{Reactions}
+❤️ 
+
+[02/27/2025 20:42] cloudellie
+Ahahaha Pota-Toad Sec! Love it, @MrPotatoMagic @McToady 👏👏👏
+
+{Reactions}
+💜 (3) 🥔 (5) 🐸 (5) 
+
+[02/27/2025 22:42] 0xgondarxyz
+there was an XSS attack on createAgent function, has anyone submitted it?
+
+
+[02/28/2025 03:19] mrfalsegenius
+@Walodja1987 | DIVA Protocol Congrats!
+
+
+[02/28/2025 06:03] johnson24_
+My name is not on it and I participated in it
+
+
+[02/28/2025 06:04] johnson24_
+My name is not there and I submitted report on it
+
+{Reactions}
+😢 (2) 
+
+[02/28/2025 06:20] daniel526
+same, this might mean our submissions were invalid/ insufficient
+
+{Reactions}
+👍 (5) 
+
+[02/28/2025 06:31] bizzaro0x13
+what was the high vulnerability ?
+
+
+[02/28/2025 10:40] 0xaudron
+same men
+
+
+[02/28/2025 12:05] 0xgondarxyz
+I'm confused about this bug. I submitted this one, and it is definitely valid. I wonder if they downgraded into a low. Might be that these days XSS attacks are considered low IDK
+
+
+[02/28/2025 13:07] walodja1987
+Oh wow, didn’t expect that 🥳
+
+{Reactions}
+❤️ (3) 
+
+[02/28/2025 13:10] walodja1987
+Award will be recycled into my next audit on some of my own contracts 😊
+
+{Reactions}
+😂 (4) 
+
+[02/28/2025 14:41] louistsai0402
+Hello, where could I check whether my finding is valid? Is it in the https://code4rena.com/findings page?
+
+{Embed}
+https://code4rena.com/findings
+Findings | Code4rena
+Top auditors compete to keep high severity bugs out of production. Start a public or private audit within 48 hours.
+
+
+[02/28/2025 14:43] louistsai0402
+All of my findings are listed in the page but I do not know it is valid or invalid. should i wait until the final report?
+
+
+[02/28/2025 15:13] mrfalsegenius
+Yes, wait for the final report
+
+{Reactions}
+👆 
+
+[02/28/2025 15:14] louistsai0402
+Thank you
+
+{Reactions}
+👍 
+
+[02/28/2025 22:48] welith
+if you got 2 cents or 3 cents
+
+
+[02/28/2025 22:49] welith
+then you got a valid finding
+
+{Reactions}
+🤣 
+
+[02/28/2025 22:49] welith
+😳
+
+{Reactions}
+🥺 
+
+[02/28/2025 22:49] welith
+if you got higher then you should know 😀
+
+
+[03/01/2025 00:46] anchabadze
+Surprised that the wrong parameter check in setProposalThresholdPercentage() is not an issue. Looking forward to the final report
+
+{Reactions}
+👍 
+
+[03/01/2025 05:56] willycode20
+This was reduced to a low
+
+
+[03/01/2025 13:13] 0x15_eth
+The setInitialPrice function had no validation check on the input supplied by admin…and that parameter determines the price used in liquidity
+
+It could be mistakenly set to 0
+
+Isn’t that a concern ?
+
+
+[03/01/2025 13:21] alekso1
+this sounds quite low even more qa
+
+
+[03/01/2025 13:21] alekso1
+probably caught by bots
+
+
+[03/01/2025 13:53] 0x15_eth
+So are we now judging severity based on how easy it is to find or by the impact on the protocol??
+
+{Reactions}
+😅 
+
+[03/01/2025 14:04] alekso1
+Oh no i didnt event talk about how easy it is to find, im not even a judge. Just the owner is trusted thus usually its not an issue
+
+
+[03/01/2025 14:06] 0x15_eth
+Yh I get…it’s just that sometimes i wonder why centralization risks in contests are always not considered important….”Admin is always trusted”
+
+
+[03/01/2025 14:36] undefined_joe
+if we want to validate every trusted role (mostly admin and owners) input bug as an issue, then every contest will always end up dishing out cents to auditors.
+
+There are trusted in the sense that, they will always validate the values, before they pass it to a function call.
+
+
+[03/01/2025 14:37] undefined_joe
+so no judge will give a pass mark to an issue that has to do with a trusted role function inputs.
+
+{Reactions}
+💯 (2) 
+
+[03/01/2025 16:44] zkillua.dev
+Centralization risk related findings used to be a thing. Not anymore.
+
+{Reactions}
+🥲 
+
+[03/02/2025 20:03] 0xgondarxyz
+in 2022 you'd get thousands of bucks for those. Now nothing.
+
+
+[03/03/2025 13:25] xkeywordx
+Oh, I remember that lol, people were getting paid in public competitions to say "the admin can rugpull" --> yes, take 500$, thanks for telling us
+
+{Reactions}
+😂 
+
+[03/03/2025 18:21] itsmetechjay
+❗ Wardens - please note that the judge has pointed out an error that was made in the awarding of IQ AI. There was a finding group that should have been marked as a valid Medium finding.  We are working to get this adjusted as soon as possible. 
+
+In the meantime, we have deleted the awarding post here and in #c4-updates.  We’ll get a new/updated award announcement posted as soon as possible. Thank you for your patience and understanding.
+
+{Reactions}
+🐸 (3) 🥹 
+
+[03/04/2025 03:12] itsmetechjay
+🤑 🎉  Awards for **IQ AI**:
+
+$1,865.79 USDC » potatoad-sec (@McToady and (@MrPotatoMagic)
+$1,707.90 USDC » @DoD4uFN
+$1,392.11 USDC » @Greed
+$1,190.49 USDC » @0xasen
+$915.76 USDC » @Attention
+$915.76 USDC » @Walodja1987 | DIVA Protocol
+$915.76 USDC » @tal
+$915.76 USDC » @DanielArmstrong
+$915.76 USDC » @kutu
+$915.76 USDC » @zraxx
+$915.76 USDC » @t0x1c
+$915.76 USDC » @HKdev
+$915.76 USDC » @jkk812812
+$844.33 USDC » @Topmark
+$716.77 USDC » @Codex-Bugmenot
+$554.94 USDC » @eternal1328
+$552.25 USDC » @oxait
+$551.36 USDC » @vladi319
+$551.36 USDC » EPSec (@0x539.eth | ChainDefenders and @petarP1998)
+$551.36 USDC » @A0z9
+$551.36 USDC » @newspace
+$551.36 USDC » @killua
+$551.36 USDC » 056Security (@0xb0k0 and @stanchev
+$316.22 USDC » @juancito
+$244.14 USDC » @WillyCode20
+$243.25 USDC » @shui
+$243.25 USDC » @KupiaSec
+$243.25 USDC » @EnigmaticAuditor2
+$243.25 USDC » @zaevlad
+$243.25 USDC » @Atharv
+$243.25 USDC » @dobrevaleri
+$243.25 USDC » @hakunamatata
+$243.25 USDC » @LoneWolf
+$243.25 USDC » @Crypto Hybrid
+$243.25 USDC » @wellbyt3
+$243.25 USDC » @Xcrypt
+$243.25 USDC » @den-sosnowsky
+$243.25 USDC » @SamuelTroyDomi
+$243.25 USDC » @FalseGenius
+$243.25 USDC » @kkk
+$210.53 USDC » @0xAlexSR
+$4.65 USDC » @Incogknito
+$3.58 USDC » @felconz
+$3.58 USDC » @Bizarro
+$3.58 USDC » @PCProdigy
+$3.58 USDC » @Eurovickk
+$3.58 USDC » @0xmujahid
+$3.58 USDC » @_hrmneffdi
+$3.58 USDC » Arjuna (@Calcifer and @chitresh)
+$3.58 USDC » @xKeywordx
+$3.58 USDC » @anchabadze
+$3.58 USDC » @Ahmed nabil 22
+$3.58 USDC » @noname
+$3.58 USDC » @Lamsya
+$3.58 USDC » @Petrus
+$3.58 USDC » @Brene
+$3.58 USDC » @0xaudron
+$3.58 USDC » @iceBear
+$3.58 USDC » @evta
+$3.58 USDC » @Sparrow
+$3.58 USDC » @chaosSR
+$3.58 USDC » @eLSeR17
+$3.58 USDC » @Alex Zhang
+$3.58 USDC » @PCProdigy
+$3.58 USDC » @gxh191 GMT+8
+$3.58 USDC » @Loris Jacques
+$3.58 USDC » phaseTwo (@yudhx and @MaanVad3r
+$3.58 USDC » @Tamer
+$3.58 USDC » @checks
+$0.89 USDC » @Berndt
+$0.89 USDC » @Pain
+$0.89 USDC » @sohrabhind
+$0.89 USDC » @Bareli
+$0.89 USDC » @0xAadi
+
+🏁 Findings summary
+--------------------------------------—
+1 High risk findings
+3 Med risk findings
+671 wardens participated
+
+Top Gatherers: potatoad-sec, DoD4uFN, Greed, Topmark
+Top QA report: potatoad-sec
+
+Awards will be distributed on Polygon within the next week. Congratulations all!  💸 💸 💸
+
+⚠️ Awardees, be sure to [complete your tax reporting info](https://docs.code4rena.com/awarding/incentive-model-and-awards/awarding-process#tax-information-for-code4rena-contributors-wardens-judges-etc) if you haven't already. This must be completed within 30 days (i.e. before Thursday, 03 April 2025) to receive your award distribution for this audit.
+
+*Note: If you participated in this audit and don’t see your name on this list, please wait until the report is published and the findings are made public to check on your submissions.*
+
+{Reactions}
+🔥 (9) 
+
+[03/04/2025 06:36] codexbugmenot
+Congratulations again everyone 😂, 🎉🎉🥳🥳
+
+{Reactions}
+🤣 (3) 
+
+[03/06/2025 10:37] demhack
+When will the report be available ?
+
+
+[03/06/2025 10:38] demhack
+I am really curious to see the accepted bugs
+
+
+[03/10/2025 09:19] dany_armstrong
+@Jay | C4  When will the reward be distributed?
+
+
+[03/10/2025 11:14] cloudellie
+Award distribution info is in the C4 docs: https://docs.code4rena.com/awarding/incentive-model-and-awards/awarding-process#award-distribution-requirements-and-schedule
+
+{Embed}
+https://docs.code4rena.com/awarding/incentive-model-and-awards/awarding-process
+Awarding process | Code4rena
+This is a high level overview of the C4 awarding process.
+
+
+[03/10/2025 11:41] hamid3780
+im also waiting. xd
+
+
+[03/10/2025 15:28] yesofcourse_
+Hi, this contest was supposed to have a mitigation review. Can we expect that to be conducted or it's not happening for some reason?
+
+
+[03/10/2025 15:37] cloudellie
+The IQ AI team opted for a private mitigation review rather than a competitive one.
+
+{Reactions}
+🔥 (2) 💯 
+
+[03/14/2025 08:11] eternal1328
+@Jay | C4 I have submitted my tax information for more than a week and it has not been approved. What else do I need to do to receive my bonus?
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - iq-ai-jan [1333549990361960478].txt_Files/image-069DE.png
+
+{Reactions}
+🧵 (2) 
+
+[03/19/2025 06:11] walodja1987
+Is the final report out already?
+
+
+[03/19/2025 13:19] thebrittfactor
+We haven't published the report yet. We hope to be able to move forward soon.
+
+
+[03/25/2025 00:10] zkillua.dev
+Final report is out.
+
+{Reactions}
+👀 
+
+[03/25/2025 00:12] zkillua.dev
+Looks like M-03 , L-04 both issues are pointing to the same bug.
+
+
+[03/25/2025 00:14] zkillua.dev
+not sure why it's a low and medium at the same time.
+
+
+[03/25/2025 15:38] pepobeta
+QA report bundles all low-risk finds (can't upgrade later)
+
+If submitted as medium first, it could get awards but risks being downgraded to low (then gets nothing)
+So potatoad-sec played it safe by putting in QA report instead of risking a medium submission
+
+
+[03/26/2025 22:40] C4
+ℹ️ This channel is pending archive.   As a result, any private threads will be permanently deleted 04/04/2025 22:30. Please make sure to grab anything you might need before then.
+
+
+[04/03/2025 06:52] komronkhisomov
+were rewards distributed already?
+
+
+[04/03/2025 08:28] cloudellie
+I don't believe the final batch of awards has been sent yet. We usually post in #📢・c4-updates within a few hours of awards going out.
+
+
+[04/03/2025 12:00] komronkhisomov
+got u, thanks 👍
+
+{Reactions}
+hi5 
+
+[04/03/2025 20:02] C4
+ℹ️ Reminder: this channel will be deleted after 24 hours.
+
+
+==============================================================
+Exported 238 message(s)
+==============================================================
