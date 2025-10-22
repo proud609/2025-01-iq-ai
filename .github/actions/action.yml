@@ -40,7 +40,14 @@ runs:
       shell: bash
       working-directory: ../bastet-cicd
       run: |
-        docker-compose -f docker-compose.cicd.yml down --remove-orphans || true
+        docker-compose -f docker-compose.cicd.yml down --remove-orphans
+    
+    - name: Remove existing Docker volumes
+      shell: bash
+      working-directory: ../bastet-cicd
+      run: |
+        - docker system prune --volumes --force
+
     
     - name: Start PostgreSQL
       shell: bash
