@@ -94,10 +94,6 @@ runs:
     - name: Run Bastet scan
       shell: bash
       working-directory: ../bastet-cicd
-      env:
-        OPENAI_API_KEY: ${{ inputs['openai-api-key'] }}
-        OPENAI_API_BASE: ${{ inputs['openai-api-base'] }}
-        OPENAI_MODEL_NAME: ${{ inputs['openai-model-name'] }}
       run: |
         docker-compose -f docker-compose.cicd.yml exec -T bastet \
         bash -c "echo '5' | poetry run python /app/cli/main.py init --n8n-url http://n8n:5678"
