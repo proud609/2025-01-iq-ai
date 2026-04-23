@@ -151,4 +151,4 @@ runs:
       shell: bash
       working-directory: ../bastet-cicd
       run: |
-        - docker system prune --volumes --force
+        docker system prune --volumes --force
